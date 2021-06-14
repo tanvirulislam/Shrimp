@@ -12,7 +12,6 @@ use App\Product;
 use App\Stock;
 use App\Store;
 use App\Wishlist;
-use App\Shipping;
 
 use App\Subcategory;
 
@@ -128,7 +127,7 @@ class ProductController extends Controller
             ->orWhere('desp','LIKE','%'.$search.'%')
             ->oRwhere('category_slug','LIKE','%'.$search.'%')
             ->oRwhere('subcategory_slug','LIKE','%'.$search.'%')
-            ->get();
+            ->latest()->paginate(2);
 
     return Response()->json([
         'status' => 'success',
@@ -170,13 +169,13 @@ public function pmenu($slug){
         //
     }
     
-     public function cart(Request$request)  {
+     public function cart()  {
         $cartCollection = \Cart::getContent();
         
-        return Response()->json([
-            'status' => 'success',
-            'cart' => $cartCollection
-        ], 200);
+ return Response()->json([
+        'status' => 'success',
+        'card' => $cartCollection
+    ], 200);
     }
 
      public function add(Request$request){
@@ -221,7 +220,10 @@ public function pmenu($slug){
     
         public function add2(Request $request)
 {
-        $customer = new Shipping();
+    
+    
+    
+        $customer = new Shippinfo();
         $customer->name = $request->name;
         $customer->payment_transection = $request->payment_transection;
         $customer->payment_number = $request->payment_number;
@@ -244,17 +246,23 @@ public function pmenu($slug){
 }
 
 public function product_detail($id){
-
-            $products = DB::table('products')->where('id', $id)->first();
-            $related_fish = Product::all();
-            
-            return response()->json([
+    
+    // $slug = substr($product_slug,3);
+    
+    //dd($slug);
+    
+       
+        $products = DB::table('products')->where('id', $id)->first();
+        $related_fish = Product::all();
         
-                'products' => $products,
-                'related_fish' => $related_fish,
+        return response()->json([
+      
+            'products' => $products,
+            'related_fish' => $related_fish,
+           
             
-                ],200);
-        
-    }
+            ],200);
+    
+}
 
 }

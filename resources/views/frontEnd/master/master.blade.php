@@ -77,7 +77,7 @@
     <script>
     $(document).ready(function() {
         $(".search_icon").click(function() {
-            $(".small_screen_search").slideDown("slow");
+            $(".small_screen_search").slideToggle("fast");
         });
     });
     </script>

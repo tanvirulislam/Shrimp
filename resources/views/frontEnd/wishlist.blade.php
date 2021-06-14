@@ -18,11 +18,11 @@ Wishlist | Fish & Shrimp E-commerce
                         <p>{{$cat_product->name}}</p>
                         <p>{{$cat_product->weight}} KG</p>
 
-                        <span class="fa fa-star checked"></span>
+                        <!-- <span class="fa fa-star checked"></span>
 										<span class="fa fa-star checked"></span>
 										<span class="fa fa-star checked"></span>
 										<span class="fa fa-star"></span>
-										<span class="fa fa-star"></span>
+										<span class="fa fa-star"></span> -->
 
                         <div class="row" style="">
                             <!-- <div class="col-6 col-sm-6">
@@ -58,7 +58,12 @@ Wishlist | Fish & Shrimp E-commerce
 
                                 </form>
                             </div>
-                          
+                            <!-- <div class="choose">
+												<ul class="nav nav-pills nav-justified">
+													<li><a href="{{route('wishlist', $cat_product->product_slug)}}"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+													<li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
+												</ul>
+											</div> -->
                         </div>
 
                     </div>
