@@ -38,6 +38,7 @@ Route::post('/your_cart/update', 'Api\ProductController@update1')->name('cart1.u
 Route::post('/your_cart/remove', 'Api\ProductController@remove1')->name('cart1.remove');
 Route::post('/your_cart/clear', 'Api\ProductController@clear1')->name('cart1.clear');
 
+
 Route::post('/your_shipping/add', 'Api\ProductController@add2')->name('shipping1.store');
 
 
