@@ -174,7 +174,7 @@ public function pmenu($slug){
         
  return Response()->json([
         'status' => 'success',
-        'card' => $cartCollection
+        'cart' => $cartCollection
     ], 200);
     }
 
@@ -210,6 +210,7 @@ public function pmenu($slug){
                     'value' => $request->quantity
                 ),
         ));
+
         return redirect()->route('cart.index')->with('success_msg', 'Cart is Updated!');
     }
 
@@ -218,10 +219,7 @@ public function pmenu($slug){
         return redirect()->route('cart.index')->with('success_msg', 'Car is cleared!');
     }
     
-        public function add2(Request $request)
-{
-    
-    
+        public function add2(Request $request){
     
         $customer = new Shippinfo();
         $customer->name = $request->name;
