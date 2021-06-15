@@ -43,65 +43,46 @@ DESH BANGLA FISH & SHRIMP
             <div class="col-lg-8">
                 <div class="cart-table">
                     <h3>Your Cart</h3>
-                    <div class="cart-table-warp">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th class="product-th">Product</th>
-                                    <th class="quy-th">Weight (KG)</th>
-                                    <th class="quy-th"> Subtotal (TK)</th>
-                                    <th class="size-th">Action</th>
-                                    <!-- <th class="total-th">Action</th> -->
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($cartCollection as $item)
-                                <tr>
-                                    <td class="product-col">
-                                        <img src="{{ $item->attributes->image }}" class="img-thumbnail" alt="image"
+                    @foreach($cartCollection as $item)
+                    <div class="row">
+                   
+                    <div class="col-md-3 col-3">
+                        <img src="{{ $item->attributes->image }}" class="img-thumbnail" alt="image"
                                             width="200" height="200">
-                                        <div class="pc-title">
-                                            <h4>{{$item->name}}</h4>
-                                            <p>{{$item->price}}</p>
-                                        </div>
-                                    </td>
-                                    <td class="quy-col">
-                                        <div class="quantity">
-                                            <!-- <div class="pro-qty"> -->
-                                            <form action="{{ route('cart.update') }}" method="POST" class="form-inline">
-                                                {{ csrf_field() }}
-                                                <div class="form-group">
-                                                    <input type="hidden" value="{{ $item->id}}" id="id" name="id">
-                                                    <input type="number" class="form-control form-control-sm"
-                                                        value="{{ $item->quantity }}" id="quantity" name="quantity"
-                                                        style="width:70px;">
-                                                </div>
-                                                &nbsp;
-                                                <button style="margin-top: inherit;"
-                                                    class="btn btn-primary ">Update</button>
-                                            </form>
-                                            <!-- </div> -->
-                                        </div>
-                                    </td>
-                                    <td class="size-col">
-                                        <h4>{{ \Cart::get($item->id)->getPriceSum() }}</h4>
-                                    </td>
-                                    <td class="total-col">
-                                        <form action="{{ route('cart.remove') }}" method="POST" class="form-inline">
-                                            @csrf
-                                            <input type="hidden" value="{{ $item->id }}" id="id" name="id">
-                                            <button style="margin-top: inherit;" class="btn btn-primary py-2 px-3"
-                                                style="">Delete</i></button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
                     </div>
-                    <div class="total-cost">
-                        <h6>Total <span>BDT. {{ \Cart::getTotal() }}</span></h6>
+                    <div class="col-md-6 col-6">
+                        <div class="pc-title">
+                            <h6>{{$item->name}}</h6>
+                            
+                            <p class="mt-3">Price </p>
+                            <p>Weight</p>
+                        </div>
                     </div>
+                    <div class="col-md-3 col-3">
+                        <div class="pc-title">
+                            <form action="{{ route('cart.remove') }}" method="POST" class="form-inline">
+                                @csrf
+                                <input type="hidden" value="{{ $item->id }}" id="id" name="id">
+                                <button style="margin-top: inherit;background: transparent; border: none; color: black;" class="btn btn-primary py-2 px-3"
+                                    ><i class="fa fa-times" aria-hidden="true"></i></button>
+                            </form>
+                            <p>{{$item->price}} TK</p>
+                            <form action="{{ route('cart.update') }}" method="POST" class="form-inline">
+                                {{ csrf_field() }}
+                                <div class="form-group">
+                                    <input type="hidden" value="{{ $item->id}}" id="id" name="id">
+                                    <input type="number" class="form-control form-control-sm"
+                                        value="{{ $item->quantity }}" id="quantity" name="quantity"
+                                        style="width:70px;"> KG
+                                </div>
+                                &nbsp;
+                                <button style="margin-top: inherit;"
+                                    class="btn btn-primary cart-update-btn">Update</button>
+                            </form>
+                        </div>
+                    </div>
+                    </div>
+                    @endforeach
                 </div>
             </div>
             <div class="col-lg-4 card-right">

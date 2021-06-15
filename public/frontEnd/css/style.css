@@ -2459,6 +2459,14 @@ ol {
 	display:none;
 }
 @media only screen and (max-width: 479px) {
+	.cart-update-btn{
+		margin-top: -33px !important;
+    margin-left: -10px;
+    background: #2c976b;
+	}
+	.cart-table {
+		padding: 12px 7px !important;
+	}
 	.checkout-form .cf-title{
 		margin-bottom: 27px;
 	}
