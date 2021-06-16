@@ -45,44 +45,62 @@ DESH BANGLA FISH & SHRIMP
                     <h3>Your Cart</h3>
                     @foreach($cartCollection as $item)
                     <div class="row">
-                   
-                    <div class="col-md-3 col-3">
-                        <img src="{{ $item->attributes->image }}" class="img-thumbnail" alt="image"
-                                            width="200" height="200">
-                    </div>
-                    <div class="col-md-6 col-6">
-                        <div class="pc-title">
-                            <h6>{{$item->name}}</h6>
-                            
-                            <p class="mt-3">Price </p>
-                            <p>Weight</p>
+
+                        <div class="col-md-3 col-3">
+                            <img src="{{ $item->attributes->image }}" class="img-thumbnail" alt="image" width="200 px" height="200 px">
                         </div>
-                    </div>
-                    <div class="col-md-3 col-3">
-                        <div class="pc-title">
-                            <form action="{{ route('cart.remove') }}" method="POST" class="form-inline">
-                                @csrf
-                                <input type="hidden" value="{{ $item->id }}" id="id" name="id">
-                                <button style="margin-top: inherit;background: transparent; border: none; color: black;" class="btn btn-primary py-2 px-3"
-                                    ><i class="fa fa-times" aria-hidden="true"></i></button>
-                            </form>
-                            <p>{{$item->price}} TK</p>
-                            <form action="{{ route('cart.update') }}" method="POST" class="form-inline">
-                                {{ csrf_field() }}
-                                <div class="form-group">
-                                    <input type="hidden" value="{{ $item->id}}" id="id" name="id">
-                                    <input type="number" class="form-control form-control-sm"
-                                        value="{{ $item->quantity }}" id="quantity" name="quantity"
-                                        style="width:70px;"> KG
-                                </div>
-                                &nbsp;
-                                <button style="margin-top: inherit;"
-                                    class="btn btn-primary cart-update-btn">Update</button>
-                            </form>
+                        <div class="col-md-6 col-6">
+                            <div class="pc-title">
+                                <h6>{{$item->name}}</h6>
+
+                                <p class="mt-3">Price (TK)</p>
+                                <p>Weight (KG)</p>
+                                <p>Subtotal (TK)</p>
+                            </div>
                         </div>
-                    </div>
+                        <div class="col-md-3 col-3 ">
+                            <div class="pc-title">
+                                <form action="{{ route('cart.remove') }}" method="POST" class="form-inline">
+                                    @csrf
+                                    <input type="hidden" value="{{ $item->id }}" id="id" name="id">
+                                    <button style="margin-top: inherit;background: transparent; border: none; color: black;" class="btn btn-primary py-2 px-3"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                </form>
+                                <p>{{$item->price}} </p>
+                                <form action="{{ route('cart.update') }}" method="POST" class="form-inline">
+                                    {{ csrf_field() }}
+                                    <div class="form-group">
+
+                                        <!-- <div class="quy-col">
+                                    <div class="quantity">
+                                        <div class="pro-qty">
+                                            <input type="hidden" value="{{ $item->id}}" id="id" name="id">
+                                            <input type="text" value="{{ $item->quantity }}" id="quantity" name="quantity">
+                                        </div>
+                                    </div>
+                                </div> -->
+
+                                        <input type="hidden" value="{{ $item->id}}" id="id" name="id">
+                                        <input type="number" class="form-control form-control-sm cart-input-field" value="{{ $item->quantity }}" id="quantity" name="quantity" style="width:70px;">
+                                    </div>
+                                    &nbsp;
+                                    <button style=" color: #000000; background: transparent; border: none;" class="btn btn-primary cart-update-btn">
+                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                    </button>
+                                </form>
+                                <p>{{ \Cart::get($item->id)->getPriceSum() }}</p>
+                            </div>
+                        </div>
                     </div>
                     @endforeach
+<br>
+                    <div class="row">
+                        <div class="col-md-6 col-6">
+                            <p>Total <span>(including vat)</span> </p>
+                        </div>
+                        <div class="col-md-6 col-6">
+                            <h6>Total <span>BDT. {{ \Cart::getTotal() }}</span></h6>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-4 card-right">
