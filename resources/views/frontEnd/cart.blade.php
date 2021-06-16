@@ -63,7 +63,7 @@ DESH BANGLA FISH & SHRIMP
                                 <form action="{{ route('cart.remove') }}" method="POST" class="form-inline">
                                     @csrf
                                     <input type="hidden" value="{{ $item->id }}" id="id" name="id">
-                                    <button style="margin-top: inherit;background: transparent; border: none; color: black;" class="btn btn-primary py-2 px-3"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    <button style="margin-left: -14px;background: transparent; border: none; color: black;" class="btn btn-primary py-2 px-3"><i class="fa fa-times" aria-hidden="true"></i></button>
                                 </form>
                                 <p>{{$item->price}} </p>
                                 <form action="{{ route('cart.update') }}" method="POST" class="form-inline">
@@ -92,7 +92,7 @@ DESH BANGLA FISH & SHRIMP
                         </div>
                     </div>
                     @endforeach
-<br>
+                    <br>
                     <div class="row">
                         <div class="col-md-6 col-6">
                             <p>Total <span>(including vat)</span> </p>
@@ -108,8 +108,7 @@ DESH BANGLA FISH & SHRIMP
                     <input type="text" placeholder="Enter promo code">
                     <button>Submit</button>
                 </form>
-                <!-- <a href="" class="site-btn">Proceed to checkout</a>
-                <a href="" class="site-btn sb-dark">Continue shopping</a> -->
+               
                 @if(count($cartCollection)>0)
                 <a href="{{ route('index') }}" style="margin-top: inherit;" class="site-btn">Continue
                     Shopping</a>
