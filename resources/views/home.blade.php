@@ -11,11 +11,11 @@ Products | Fish & Shrimp E-commerce
             <div class="card">
                 <div class="card-header"></div>
                 <div class="card-body">
-                    <a href="{{route('user_pending_order')}}" type="button" class="btn btn-success">Pending
+                    <a href="{{route('user_pending_order')}}" type="button" class="btn btn-success mb-2">Pending
                         order</a>
-                    <a href="{{route('order_history')}}" type="button" class="btn btn-info">Order history</a>
+                    <a href="{{route('order_history')}}" type="button" class="btn btn-info mb-2">Order history</a>
 
-                    <a class="btn btn-danger" href="{{ route('logout') }}" onclick="event.preventDefault();
+                    <a class="btn btn-danger mb-2" href="{{ route('logout') }}" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();"><i class="material-icons"></i>Sign Out</a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf

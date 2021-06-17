@@ -79,7 +79,7 @@
             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
             <p class="text-white text-center mt-5">Copyright &copy;<script>
                 document.write(new Date().getFullYear());
-                </script> DESH BANGLA Fish & Shrimp All rights reserved. <i class="fa fa-heart-o"
+                </script> DESH BANGLA FISH & SHRIMP All rights reserved. <i class="fa fa-heart-o"
                     aria-hidden="true"></i> &nbsp; Developed  by <a href="https://codetreebd.com/" target="_blank">
                     <span style="color:#2C976B" > CODETREE</span>   </p>
             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->

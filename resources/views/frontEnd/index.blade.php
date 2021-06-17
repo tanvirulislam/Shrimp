@@ -17,8 +17,8 @@ DESH BANGLA FISH & SHRIMP
                         <span class="banner_font">{{$ban->product_name}}</span>
                         <h2 class="banner_font">{{$ban->title}}</h2>
                         <p class="banner_font">{{$ban->desp}} </p>
-                        <a href="#" class="site-btn sb-line">DISCOVER</a>
-                        <a href="#" class="site-btn sb-white">ADD TO CART</a>
+                        <a href="#feature" class="site-btn sb-line">DISCOVER</a>
+                        <!-- <a href="#" class="site-btn sb-white">ADD TO CART</a> -->
                     </div>
                 </div>
                 <div class="offer-card text-white">
@@ -76,7 +76,7 @@ DESH BANGLA FISH & SHRIMP
 
 
 <!-- letest product section -->
-<section class="top-letest-product-section">
+<section class="top-letest-product-section" id="feature">
     <div class="container">
         <div class="section-title">
             <h2>Feature Product</h2>
