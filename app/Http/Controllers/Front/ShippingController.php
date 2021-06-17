@@ -57,17 +57,7 @@ class ShippingController extends Controller
 	}
 
 	public function login(Request $request){
-		// $customer = User::where('email',$request->email)->first();
-		// if(password_verify($request->password,$customer->password)){
-
-		// 	Session::put('customerId',$customer->id);
-		// 	Session::put('customerName',$customer->name);
-
-		// 	return redirect('/shipping_info');
-		// } else {
-		// 	return redirect('/customer')->with('message','Incorrect Password');
-		// }
-// dd($request->email);
+	
 		$request->validate([
             'email' => 'required|max:50',
             'password' => 'required',

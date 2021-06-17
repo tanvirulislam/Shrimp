@@ -221,27 +221,55 @@ public function pmenu($slug){
     
         public function add2(Request $request){
     
-        $customer = new Shippinfo();
-        $customer->name = $request->name;
-        $customer->payment_transection = $request->payment_transection;
-        $customer->payment_number = $request->payment_number;
-        $customer->bpayment_tran = $request->bpayment_tran;
-        $customer->bpayment_number = $request->bpayment_number;
-        $customer->payment_type = $request->payment_type;
-        $customer->phone = $request->phone;
-        $customer->address = $request->address;
-        $customer->msg = $request->msg;
-        $customer->p_id = implode(',',(array)$request->p_id);
-        $customer->quantity = implode(',',(array)$request->quantity);
-        $customer->price = implode(',',(array)$request->price);
-        $customer->total_price = $request->total_price;
-        $customer->save();
-       return Response()->json([
-        'status' => 'success',
-        'order_detail' => $customer
-    ], 200);
+            $customer = new Shippinfo();
+            $customer->name = $request->name;
+            $customer->payment_transection = $request->payment_transection;
+            $customer->payment_number = $request->payment_number;
+            $customer->bpayment_tran = $request->bpayment_tran;
+            $customer->bpayment_number = $request->bpayment_number;
+            $customer->payment_type = $request->payment_type;
+            $customer->phone = $request->phone;
+            $customer->address = $request->address;
+            $customer->msg = $request->msg;
+            $customer->p_id = implode(',',(array)$request->p_id);
+            $customer->quantity = implode(',',(array)$request->quantity);
+            $customer->price = implode(',',(array)$request->price);
+            $customer->total_price = $request->total_price;
+            $customer->save();
+        return Response()->json([
+            'status' => 'success',
+            'order_detail' => $customer
+        ], 200);
 
-}
+    }
+
+    // public function show(Cart $cart, Request $request)
+    // {
+    //     $validator = Validator::make($request->all(), [
+    //         'cartKey' => 'required',
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return response()->json([
+    //             'errors' => $validator->errors(),
+    //         ], 400);
+    //     }
+
+    //     $cartKey = $request->input('cartKey');
+    //     if ($cart->key == $cartKey) {
+    //         return response()->json([
+    //             'cart' => $cart->id,
+    //             'Items in Cart' => new CartItemCollection($cart->items),
+    //         ], 200);
+
+    //     } else {
+
+    //         return response()->json([
+    //             'message' => 'The CarKey you provided does not match the Cart Key for this Cart.',
+    //         ], 400);
+    //     }
+
+    // }
 
 public function product_detail($id){
     

@@ -18,6 +18,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// Route::group(['prefix' => 'auth'], function () {
+
+    Route::post('login', 'Api\AuthController@login')->name('login');
+    Route::post('signup', 'Api\AuthController@signup');
+
+    Route::group(['middleware' => 'auth:api'], function () {
+        Route::get('logout', 'AuthController@logout');
+    });
+
+// });
+
 Route::apiResource('/category','Api\CategoryController');
 Route::apiResource('/subcategory','Api\SubCategoryController');
 Route::apiResource('/product','Api\ProductController');
@@ -38,6 +49,10 @@ Route::post('/your_cart/remove', 'Api\ProductController@remove1')->name('cart1.r
 Route::post('/your_cart/clear', 'Api\ProductController@clear1')->name('cart1.clear');
  
 Route::post('/your_shipping/add', 'Api\ProductController@add2')->name('shipping1.store');
+
+
+Route::apiResource('carts', 'CartController')->except(['update', 'index']);
+
 
 
 
