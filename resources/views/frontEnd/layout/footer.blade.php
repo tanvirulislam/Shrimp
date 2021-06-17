@@ -1,4 +1,4 @@
-<section class="footer-section">
+<section class="footer-section" id="contact">
     <div class="container">
        
         <div class="row">
@@ -6,7 +6,7 @@
                 <div class="footer-widget about-widget">
                     <h2>About</h2>
                     <p>We provide you always fresh fish. We care about your health. We provide you always fresh fish. We care about your health. We provide you always fresh fish. We care about your health.</p>
-                    <img src="img/cards.png" alt="">
+                    <img class="payment_img" src="img/cards.png" alt="">
                 </div>
             </div>
             <div class="col-lg-4 col-sm-6">

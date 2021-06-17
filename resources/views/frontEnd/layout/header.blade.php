@@ -91,7 +91,7 @@
                         account </a>
                     @endif
                 </li>
-                <li><a href="#">Contact</a> </li>
+                <li><a href="#contact">Contact</a> </li>
                 <li><a href="#">Blog</a></li>
             </ul>
         </div>
