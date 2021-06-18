@@ -51,8 +51,6 @@ Route::post('/your_cart/clear', 'Api\ProductController@clear1')->name('cart1.cle
 Route::post('/your_shipping/add', 'Api\ProductController@add2')->name('shipping1.store');
 
 
-Route::apiResource('carts', 'CartController')->except(['update', 'index']);
-
 
 
 

@@ -2,23 +2,26 @@
 
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\Session;
+
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use DB;
 use App\Category;
+use App\Subcategory;
 use App\Banner;
 use App\Logo_Offer;
 use App\Product;
 use App\Stock;
 use App\Store;
+use App\Shipping;
 use App\Wishlist;
-
-use App\Subcategory;
 
 use App\Http\Resources\Product\ProductResource;
 use App\Http\Resources\Product\FeatureProductResource;
 use App\Http\Resources\Product\CatProductResource;
 use App\Http\Resources\Product\SubCatProductResource;
+
 class ProductController extends Controller
 {
     /**
@@ -178,14 +181,15 @@ public function pmenu($slug){
             ], 200);
     }
 
-     public function add(Request$request){
+     public function add(Request $request){
+        //  $product_id = $request->id;
        \Cart::add(array(
             'id' => $request->id,
             'name' => $request->name,
             'price' => $request->price,
             'quantity' => $request->quantity,
             'attributes' => array(
-                'image' => $request->img,
+                'image' => $request->image,
                 'slug' => $request->slug
             )
         ));
@@ -211,65 +215,33 @@ public function pmenu($slug){
                 ),
         ));
 
-        return redirect()->route('cart.index')->with('success_msg', 'Cart is Updated!');
+        return redirect()->route('cart1.index')->with('success_msg', 'Cart is Updated!');
     }
 
     public function clear1(){
         \Cart::clear();
-        return redirect()->route('cart.index')->with('success_msg', 'Car is cleared!');
+        return redirect()->route('cart1.index')->with('success_msg', 'Car is cleared!');
     }
     
         public function add2(Request $request){
-    
-            $customer = new Shippinfo();
-            $customer->name = $request->name;
-            $customer->payment_transection = $request->payment_transection;
-            $customer->payment_number = $request->payment_number;
-            $customer->bpayment_tran = $request->bpayment_tran;
-            $customer->bpayment_number = $request->bpayment_number;
-            $customer->payment_type = $request->payment_type;
-            $customer->phone = $request->phone;
+
+            // $user= Session::get('customerId');
+
+            $customer = new Shipping();
+            $customer->customer_name = $request->customer_name;
+            $customer->email = $request->email;
+            $customer->phone_num = $request->phone_num;
             $customer->address = $request->address;
-            $customer->msg = $request->msg;
-            $customer->p_id = implode(',',(array)$request->p_id);
-            $customer->quantity = implode(',',(array)$request->quantity);
-            $customer->price = implode(',',(array)$request->price);
-            $customer->total_price = $request->total_price;
+            $customer->message = $request->message;
             $customer->save();
-        return Response()->json([
-            'status' => 'success',
-            'order_detail' => $customer
-        ], 200);
+            return Response()->json([
+                'status' => 'success',
+                'order_detail' => $customer
+            ], 200);
 
     }
 
-    // public function show(Cart $cart, Request $request)
-    // {
-    //     $validator = Validator::make($request->all(), [
-    //         'cartKey' => 'required',
-    //     ]);
-
-    //     if ($validator->fails()) {
-    //         return response()->json([
-    //             'errors' => $validator->errors(),
-    //         ], 400);
-    //     }
-
-    //     $cartKey = $request->input('cartKey');
-    //     if ($cart->key == $cartKey) {
-    //         return response()->json([
-    //             'cart' => $cart->id,
-    //             'Items in Cart' => new CartItemCollection($cart->items),
-    //         ], 200);
-
-    //     } else {
-
-    //         return response()->json([
-    //             'message' => 'The CarKey you provided does not match the Cart Key for this Cart.',
-    //         ], 400);
-    //     }
-
-    // }
+   
 
 public function product_detail($id){
     
