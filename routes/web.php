@@ -46,6 +46,7 @@ Route::get('/clear', function() {
     Route::get('wishlist/customer/login', 'Front\FrontController@wishlist_customer_login')->name('wishlist_customer_login');
     Route::get('/wishlist/{product_slug}', 'Front\FrontController@wishlist')->name('wishlist');
     Route::get('wishlist-detail', 'Front\FrontController@wishlist_detail')->name('wishlist_detail');
+    Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout'); //customer logout
 
     Route::get('/customer/dashoard/login', 'Front\FrontController@customer_dashoard')->name('customer_dashoard.login');
     Route::get('/customer/dashoard', 'Front\FrontController@c_dashoard')->name('customer_dashoard');

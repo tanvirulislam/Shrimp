@@ -182,7 +182,6 @@ public function pmenu($slug){
     }
 
      public function add(Request $request){
-        //  $product_id = $request->id;
        \Cart::add(array(
             'id' => $request->id,
             'name' => $request->name,

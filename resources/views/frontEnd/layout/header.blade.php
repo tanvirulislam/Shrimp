@@ -92,9 +92,7 @@
                     @endif
                 </li>
                 <li><a href="{{ route('logout') }}">Sign Out</a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
+                
                 </li>
                 <li><a href="#contact">Contact</a> </li>
                 <li><a href="#">Blog</a></li>

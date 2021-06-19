@@ -160,7 +160,7 @@ DESH BANGLA FISH & SHRIMP
                                             <input type="hidden" id="quantity" name="quantity"
                                                 class="quantity form-control input-number" value="1" min="1" max="100">
                                                 
-                                                <a href="#" style="    margin-left: 11px;" class="wishlist-btn"><i
+                                                <a href="{{route('wishlist', $cat_product->product_slug)}}" style="    margin-left: 11px;" class="wishlist-btn"><i
                                                     class="fa fa-heart" aria-hidden="true"></i></a>
                                                     
                                             <button type="submit" class="add-card"><i class="fa fa-shopping-cart"></i>

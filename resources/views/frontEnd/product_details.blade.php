@@ -123,7 +123,7 @@
 
                            <button type="submit" class="add-card"><i class="fa fa-shopping-cart"></i>
                                 <span >ADD TO CART</span></button>
-                            <a href="#" class="wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                            <a href="{{route('wishlist', $item->product_slug)}}" class="wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                         </form>
                     </div>
                 </div>
