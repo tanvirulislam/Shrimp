@@ -17,7 +17,7 @@ DESH BANGLA FISH & SHRIMP
                         <span class="banner_font">{{$ban->product_name}}</span>
                         <h2 class="banner_font">{{$ban->title}}</h2>
                         <p class="banner_font">{{$ban->desp}} </p>
-                        <a href="#feature" class="site-btn sb-line">DISCOVER</a>
+                        <a style="color:black; " href="#feature" class="site-btn sb-line">DISCOVER</a>
                         <!-- <a href="#" class="site-btn sb-white">ADD TO CART</a> -->
                     </div>
                 </div>
@@ -101,7 +101,7 @@ DESH BANGLA FISH & SHRIMP
                            <button type="submit" class="add-card"><i class="fa fa-shopping-cart"></i>
                                 <span >ADD TO CART</span></button>
 
-                            <a href="#" class="wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                            <a href="{{route('wishlist', $item->product_slug)}}" class="wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                         </form>
 
                         <!-- <a href="#" class="add-card"> <i class="fa fa-shopping-cart" aria-hidden="true"></i><span>ADD TO

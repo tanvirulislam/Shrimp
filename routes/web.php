@@ -43,13 +43,14 @@ Route::get('/clear', function() {
     Route::post('/cart/clear', 'Front\CartController@clear')->name('cart.clear');
 
     // wishlist
+    Route::get('wishlist/customer/login', 'Front\FrontController@wishlist_customer_login')->name('wishlist_customer_login');
     Route::get('/wishlist/{product_slug}', 'Front\FrontController@wishlist')->name('wishlist');
     Route::get('wishlist-detail', 'Front\FrontController@wishlist_detail')->name('wishlist_detail');
-    Route::get('wishlist/customer/login', 'Front\FrontController@wishlist_customer_login')->name('wishlist_customer_login');
-
 
     Route::get('/customer/dashoard/login', 'Front\FrontController@customer_dashoard')->name('customer_dashoard.login');
     Route::get('/customer/dashoard', 'Front\FrontController@c_dashoard')->name('customer_dashoard');
+
+    Route::post('/logout/submit', 'Admin\Auth\LoginController@logout')->name('admin.logout.submit');
 
     Route::get('/customer', 'Front\ShippingController@index')->name('loginPage');
     Route::post('/customer/login', 'Front\ShippingController@login')->name('customer.login');

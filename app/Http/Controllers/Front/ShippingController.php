@@ -106,8 +106,8 @@ class ShippingController extends Controller
 		$wishlist = Wishlist::count();
         $nav_category = Category::all();
 
-        
         return view('frontEnd.customer.dashboard', compact('logo', 'offer', 'wishlist', 'nav_category'));
+		// return redirect('/');
     }
       
 

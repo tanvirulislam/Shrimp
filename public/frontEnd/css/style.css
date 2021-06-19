@@ -2496,9 +2496,9 @@ ol {
 	.top-letest-product-section {
 		padding-bottom: 0px;
 	}
-	.header-search-form input {
-		/* border-radius: 0px !important; */
-	}
+	/* .header-search-form input {
+		border-radius: 0px !important;
+	} */
 	.small_screen_search{
         position: absolute;
         z-index: 997;

@@ -72,11 +72,11 @@
                         <li><a href="{{route('all_products')}}">All products</a></li>
                         <li><a href="{{route('cart.index')}}">Cart<sup>{{ Cart::getContent()->count()}}</sup></a></li>
                         <li>
-                            @if(Auth::check())
-                            <a class="" href="#">Wishlist
+                            @if(Auth::check() && Auth::user()->role_id == 2)
+                            <a class="" href="{{route('wishlist_detail')}}">Wishlist
                                 <sup>{{ $wishlist}}</sup></a>
                             @else
-                            <a class="" href="#">Wishlist<sup>{{ $wishlist}}</sup></a>
+                            <a class="" href="{{route('customer_dashoard_login')}}">Wishlist<sup>0</sup></a>
                             @endif
                         </li>
 
@@ -90,6 +90,11 @@
                     <a class="small_screen_a" href="{{route('customer_dashoard_login')}}">Sign In or Create
                         account </a>
                     @endif
+                </li>
+                <li><a href="{{ route('logout') }}">Sign Out</a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
                 </li>
                 <li><a href="#contact">Contact</a> </li>
                 <li><a href="#">Blog</a></li>

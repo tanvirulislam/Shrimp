@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Brian2694\Toastr\Facades\Toastr;
 use DB;
 use App\Logo_Offer;
@@ -63,4 +64,41 @@ class CartController extends Controller
         Toastr::warning('Successully Deleted 🙂' ,'Success');
 		return redirect()->route('cart.index')->with('success_msg', 'Car is cleared!');
 	}
+
+
+	// public function wishlist($id){
+		
+		
+	// 	if(Auth::check() && Auth::user()->role_id == 2){
+	// 		Wishlist::insert([
+	// 			'user_id' => Auth::id(),
+	// 			'product_id' => $id,
+	// 		]);
+	
+	// 		return redirect()->back()->with('success_msg', 'Item added into wishlist');
+	
+	// 	}else{
+	// 		return redirect()->route('customer_dashoard.login')->with('Login error', 'Login first');
+	// 	}
+	
+	// }
+	
+	// public function wishlist_detail(){
+	// 	$logo = Logo_Offer::where('logo_offer', '1')->first();
+    //     $offer = Logo_Offer::where('logo_offer', '0')->first();
+    //     $wishlist = Wishlist::count();
+    //     $nav_category = Category::all();
+	
+	// 	return view('front.wishlist', compact('logo','offer', 'wishlist', 'nav_category'));
+	// }
+
+
+
+
+
+
+
 }
+
+
+
