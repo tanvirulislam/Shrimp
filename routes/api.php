@@ -24,8 +24,9 @@ use Illuminate\Support\Facades\Route;
     Route::post('signup', 'Api\AuthController@signup');
 
     Route::group(['middleware' => 'auth:api'], function () {
-        // Route::get('hello', 'Api\AuthController@hello');
+
         Route::post('logout', 'Api\AuthController@logout');
+        
     });
 
 // });
