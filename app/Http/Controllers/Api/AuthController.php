@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\User;
 
 class AuthController extends Controller
 {
@@ -12,11 +13,13 @@ class AuthController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
-            'email' => 'required|string|email',
+            'phone' => 'required|integer',
+            'email' => 'required|string|email|unique:users',
             'password' => 'required|string|confirmed',
         ]);
         $user = new User([
             'name' => $request->name,
+            'phone' => $request->phone,
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
@@ -28,10 +31,11 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+
         $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string',
-            'remember_me' => 'boolean',
+            // 'remember_me' => 'boolean',
         ]);
 
         $credentials = request(['email', 'password']);
@@ -42,32 +46,25 @@ class AuthController extends Controller
         }
 
         $user = $request->user();
-        $tokenResult = $user->createToken('Personal Access Token');
-        $token = $tokenResult->token;
-        if ($request->remember_me) {
-            $token->expires_at = Carbon::now()->addWeeks(4);
-        }
+        $token = $user->createToken('Personal Access Token');
+        $user->access_token = $token->accessToken;
 
-        $token->save();
         return response()->json([
-            'access_token' => $tokenResult->accessToken,
-            'token_type' => 'Bearer',
-            'expires_at' => Carbon::parse(
-                $tokenResult->token->expires_at
-            )->toDateTimeString(),
-        ]);
+            "user" => $user
+        ], 200);
     }
 
-    /**
-     * Logout user (Revoke the token)
-     *
-     * @return [string] message
-     */
+ 
     public function logout(Request $request)
     {
         $request->user()->token()->revoke();
         return response()->json([
             'message' => 'Successfully logged out',
-        ]);
+        ], 201);
+    }
+
+    public function hello()
+    {
+       echo"hello";
     }
 }
