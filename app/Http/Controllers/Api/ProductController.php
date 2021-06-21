@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\Session;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
@@ -242,24 +243,34 @@ public function pmenu($slug){
 
    
 
-public function product_detail($id){
-    
-    // $slug = substr($product_slug,3);
-    
-    //dd($slug);
-    
-       
+    public function product_detail($id){
+        
         $products = DB::table('products')->where('id', $id)->first();
         $related_fish = Product::all();
         
         return response()->json([
-      
+    
             'products' => $products,
             'related_fish' => $related_fish,
-           
             
             ],200);
     
-}
+    }
+
+    public function wishlist_detail(){
+        $user_id = Auth::user()->id;
+        $all_wishlist = DB::table('wishlists')
+        ->join('products','products.product_slug','=','wishlists.product_id')
+        ->select('products.*','wishlists.product_id')
+        ->where('user_id', $user_id)
+        ->get();
+
+        return response()->json([
+            'userId' => $user_id,
+            'wishlist' => $all_wishlist,
+            
+            ],200);
+    }
+
 
 }

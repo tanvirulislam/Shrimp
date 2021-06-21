@@ -35,6 +35,9 @@ Route::apiResource('/category','Api\CategoryController');
 Route::apiResource('/subcategory','Api\SubCategoryController');
 Route::apiResource('/product','Api\ProductController');
 
+Route::get('/wishlist','Api\ProductController@wishlist_detail');
+
+
 Route::get('/banner', 'Api\ProductController@banner')->name('banner');
 
 Route::get('/category/product/{slug}', 'Api\ProductController@pmenunew')->name('catpro');
