@@ -222,26 +222,6 @@ public function pmenu($slug){
         \Cart::clear();
         return redirect()->route('cart1.index')->with('success_msg', 'Car is cleared!');
     }
-    
-        public function add2(Request $request){
-
-            // $user= Session::get('customerId');
-
-            $customer = new Shipping();
-            $customer->customer_name = $request->customer_name;
-            $customer->email = $request->email;
-            $customer->phone_num = $request->phone_num;
-            $customer->address = $request->address;
-            $customer->message = $request->message;
-            $customer->save();
-            return Response()->json([
-                'status' => 'success',
-                'order_detail' => $customer
-            ], 200);
-
-    }
-
-   
 
     public function product_detail($id){
         
@@ -257,8 +237,43 @@ public function pmenu($slug){
     
     }
 
-    public function wishlist_detail(){
+    public function shipping_show($id){
+
+        $products = DB::table('shippings')->where('user_id', $id)->get();
+        return Response()->json([
+            'Shippping info' => $products,
+        ], 200);
+    }
+    
+    public function shipping_store(Request $request){
         $user_id = Auth::user()->id;
+        $customer = new Shipping();
+        $customer->customer_name = $request->customer_name;
+        $customer->email = $request->email;
+        $customer->phone_num = $request->phone_num;
+        $customer->address = $request->address;
+        $customer->message = $request->message;
+        $customer->user_id = $user_id;
+        $customer->save();
+        return Response()->json([
+            'order_detail' => $customer,
+        ], 200);
+
+    }
+
+    public function wishlist_store(Request $request){
+
+        
+        return Response()->json([
+            // 'userId' => $user_id,
+            'order_detail' => $customer,
+        ], 200);
+
+    }
+
+    public function wishlist_detail($user_id){
+
+        // $user_id = Auth::user()->id;
         $all_wishlist = DB::table('wishlists')
         ->join('products','products.product_slug','=','wishlists.product_id')
         ->select('products.*','wishlists.product_id')
@@ -266,10 +281,21 @@ public function pmenu($slug){
         ->get();
 
         return response()->json([
+
             'userId' => $user_id,
             'wishlist' => $all_wishlist,
             
             ],200);
+    }
+
+    public function user_detail($id){
+        
+        $user_id = DB::table('users')->where('id', $id)->get();
+
+        return response()->json([
+            'userId' => $user_id,
+            ],200);
+
     }
 
 
