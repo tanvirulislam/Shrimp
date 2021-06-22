@@ -52,8 +52,9 @@ Route::post('/your_cart/clear', 'Api\ProductController@clear1')->name('cart1.cle
  
 Route::get('/shipping/{id}', 'Api\ProductController@shipping_show')->name('shipping1.show');
 Route::post('/your_shipping/add/{id}', 'Api\ProductController@shipping_store')->name('shipping1.store');
-// wishlist_store
+
 Route::get('/wishlist/{id}','Api\ProductController@wishlist_detail');
+Route::get('/wishlist_store/{id}','Api\ProductController@wishlist_store');
 Route::get('/user/{id}','Api\ProductController@user_detail');
 
 

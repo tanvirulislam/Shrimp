@@ -150,24 +150,13 @@ public function pmenu($slug){
     
 }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     public function destroy($id)
     {
         //
@@ -261,11 +250,17 @@ public function pmenu($slug){
 
     }
 
-    public function wishlist_store(Request $request){
+    public function wishlist_store(Request $request, $id){
         
+        $user_id = Auth::user()->id;
+        $wishlist = new Wishlist();
+        $wishlist->user_id = $user_id;
+        $wishlist->product_id = $request->product_id;
+        $wishlist->save();
+
         return Response()->json([
-            // 'userId' => $user_id,
-            'order_detail' => $customer,
+            'userId' => $user_id,
+            'shipping' => $wishlist,
         ], 200);
 
     }
