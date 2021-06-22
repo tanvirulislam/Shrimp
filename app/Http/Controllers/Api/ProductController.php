@@ -235,7 +235,7 @@ public function pmenu($slug){
     }
     
     public function shipping_store(Request $request, $user_id){
-        $user_id = Auth::user()->id;
+        // $user_id = Auth::user()->id;
         $customer = new Shipping();
         $customer->customer_name = $request->customer_name;
         $customer->email = $request->email;
@@ -245,21 +245,19 @@ public function pmenu($slug){
         $customer->user_id = $user_id;
         $customer->save();
         return Response()->json([
-            'order_detail' => $customer,
+            'shipping info' => $customer,
         ], 200);
 
     }
 
-    public function wishlist_store(Request $request, $id){
+    public function wishlist_store(Request $request, $user_id){
         
-        $user_id = Auth::user()->id;
         $wishlist = new Wishlist();
         $wishlist->user_id = $user_id;
         $wishlist->product_id = $request->product_id;
         $wishlist->save();
 
         return Response()->json([
-            'userId' => $user_id,
             'shipping' => $wishlist,
         ], 200);
 
@@ -267,7 +265,6 @@ public function pmenu($slug){
 
     public function wishlist_detail($user_id){
 
-        // $user_id = Auth::user()->id;
         $all_wishlist = DB::table('wishlists')
         ->join('products','products.product_slug','=','wishlists.product_id')
         ->select('products.*','wishlists.product_id')
@@ -291,6 +288,38 @@ public function pmenu($slug){
             ],200);
 
     }
+
+    public function user_pending_order($id){
+
+        // $order_history = DB::table('orders')->where('user_id', $id)->get();
+        $orders =DB::table('main_orders')
+        ->join('users','main_orders.user_id','=','users.id')
+        ->join('shippings','main_orders.shipping_id','=','shippings.id')
+        ->select('main_orders.*','users.name as Username','shippings.customer_name','shippings.address')
+        ->where('main_orders.status','=',0)
+        ->where('main_orders.user_id','=',$id)
+        ->get();
+
+        return response()->json([
+            'orders' => $orders,
+            ],200);
+        }
+
+        public function order_history($id){
+            // $order_history = Auth::user()->id;
+      
+            $orders =DB::table('main_orders')
+            ->join('users','main_orders.user_id','=','users.id')
+            ->join('shippings','main_orders.shipping_id','=','shippings.id')
+            ->select('main_orders.*','users.name as Username','shippings.customer_name','shippings.address')
+            ->where('main_orders.status','=',1)
+            ->where('main_orders.user_id','=',$id)
+            ->get();
+
+            return response()->json([
+                'orders' => $orders,
+                ],200);
+            }
 
 
 }

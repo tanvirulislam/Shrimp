@@ -3,33 +3,22 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
 
-// Route::group(['prefix' => 'auth'], function () {
 
-    Route::post('login', 'Api\AuthController@login')->name('login');
-    Route::post('signup', 'Api\AuthController@signup');
 
-    Route::group(['middleware' => 'auth:api'], function () {
+Route::post('login', 'Api\AuthController@login')->name('login');
+Route::post('signup', 'Api\AuthController@signup');
 
-        Route::post('logout', 'Api\AuthController@logout');
-        
-    });
+Route::group(['middleware' => 'auth:api'], function () {
 
-// });
+    Route::post('logout', 'Api\AuthController@logout');
+    
+});
+
 
 Route::apiResource('/category','Api\CategoryController');
 Route::apiResource('/subcategory','Api\SubCategoryController');
@@ -54,8 +43,11 @@ Route::get('/shipping/{id}', 'Api\ProductController@shipping_show')->name('shipp
 Route::post('/your_shipping/add/{id}', 'Api\ProductController@shipping_store')->name('shipping1.store');
 
 Route::get('/wishlist/{id}','Api\ProductController@wishlist_detail');
-Route::get('/wishlist_store/{id}','Api\ProductController@wishlist_store');
+Route::post('/wishlist_store/{id}','Api\ProductController@wishlist_store');
 Route::get('/user/{id}','Api\ProductController@user_detail');
+
+Route::get('/pending-order/{id}','Api\ProductController@user_pending_order');
+Route::get('/order-history/{id}','Api\ProductController@order_history');
 
 
 

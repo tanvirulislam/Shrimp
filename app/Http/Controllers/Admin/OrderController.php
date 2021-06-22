@@ -13,7 +13,7 @@ use PDF;
 use Dompdf\Dompdf;
 use App\User;
 use App\Item;
-use App\Mainorder;
+use App\MainOrder;
 use App\Logo_Offer;
 use App\Wishlist;
 use App\Category;
@@ -121,13 +121,13 @@ class OrderController extends Controller
 
     
     public function user_pending_order(){
-      $order_history = Auth::user()->id;
+      $user_id = Auth::user()->id;
       $orders =DB::table('main_orders')
       ->join('users','main_orders.user_id','=','users.id')
       ->join('shippings','main_orders.shipping_id','=','shippings.id')
       ->select('main_orders.*','users.name as Username','shippings.customer_name','shippings.address')
       ->where('main_orders.status','=',0)
-      ->where('main_orders.user_id','=',$order_history)
+      ->where('main_orders.user_id','=',$user_id)
       ->get();
 
         $status=Order::all();
