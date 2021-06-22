@@ -44,6 +44,8 @@ Route::post('/your_shipping/add/{id}', 'Api\ProductController@shipping_store')->
 
 Route::get('/wishlist/{id}','Api\ProductController@wishlist_detail');
 Route::post('/wishlist_store/{id}','Api\ProductController@wishlist_store');
+Route::post('/wishlist-delete/{id}','Api\ProductController@wishlist_delete');
+
 Route::get('/user/{id}','Api\ProductController@user_detail');
 
 Route::get('/pending-order/{id}','Api\ProductController@user_pending_order');

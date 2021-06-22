@@ -279,6 +279,20 @@ public function pmenu($slug){
             ],200);
     }
 
+    public function wishlist_delete(Request $request, $id)
+    {
+        $Wishlist = Wishlist::find($id);
+        $Wishlist->product_id = $request->product_id;
+        $Wishlist->delete();
+
+        return response()->json([
+
+            'message' => 'Successfully deleted',
+            
+            ],200);
+        
+    }
+
     public function user_detail($id){
         
         $user_id = DB::table('users')->where('id', $id)->get();
