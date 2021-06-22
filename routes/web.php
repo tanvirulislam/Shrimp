@@ -2,18 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-
 Route::get('/clear', function() {
     \Illuminate\Support\Facades\Artisan::call('cache:clear');
     \Illuminate\Support\Facades\Artisan::call('config:clear');
@@ -27,8 +15,6 @@ Route::get('/clear', function() {
     Route::get('/', 'Front\FrontController@index')->name('index');
     Route::get('/all-products', 'Front\FrontController@all_products')->name('all_products');
     Route::get('/products/{id}', 'Front\FrontController@cat_wise_all_products')->name('cat_wise_all_product');
-
-
 
     
     Route::get('/product_details/{id}', 'Front\FrontController@product_details')->name('product_details');

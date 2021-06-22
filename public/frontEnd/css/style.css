@@ -408,7 +408,7 @@ ol {
 }
 
 .main-navbar {
-	background: #2C976B;
+	background: white;
 }
 
 .slicknav_menu {
@@ -2530,7 +2530,8 @@ ol {
     margin-bottom: 0;
     margin-top: -28px;
     width: 132px;
-    top: 38px;
+    top: 44px;
+    left: 10px;
 
 	}
 	.small_screen_logo_div{
@@ -2577,4 +2578,12 @@ ol {
 /* my style----------------------------- */
 .banner_font{
 	color:black !important;
+}
+
+.slicknav_nav a {
+    color: black !important;
+}
+
+.slicknav_menu .slicknav_icon-bar {
+    background-color: black !important;
 }
