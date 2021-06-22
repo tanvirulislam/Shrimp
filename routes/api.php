@@ -51,7 +51,7 @@ Route::post('/your_cart/remove', 'Api\ProductController@remove1')->name('cart1.r
 Route::post('/your_cart/clear', 'Api\ProductController@clear1')->name('cart1.clear');
  
 Route::get('/shipping/{id}', 'Api\ProductController@shipping_show')->name('shipping1.show');
-Route::post('/your_shipping/add', 'Api\ProductController@shipping_store')->name('shipping1.store');
+Route::post('/your_shipping/add/{id}', 'Api\ProductController@shipping_store')->name('shipping1.store');
 // wishlist_store
 Route::get('/wishlist/{id}','Api\ProductController@wishlist_detail');
 Route::get('/user/{id}','Api\ProductController@user_detail');

@@ -245,7 +245,7 @@ public function pmenu($slug){
         ], 200);
     }
     
-    public function shipping_store(Request $request){
+    public function shipping_store(Request $request, $user_id){
         $user_id = Auth::user()->id;
         $customer = new Shipping();
         $customer->customer_name = $request->customer_name;
@@ -262,7 +262,6 @@ public function pmenu($slug){
     }
 
     public function wishlist_store(Request $request){
-
         
         return Response()->json([
             // 'userId' => $user_id,
