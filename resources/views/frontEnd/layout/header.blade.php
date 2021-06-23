@@ -45,12 +45,12 @@
             <img src="{{asset('/')}}{{$logo->image}}" alt="image">
         </a>
         <div class="small_screen_cart">
-            <a style="color:white" class="site-logo small_screen_icon href=" href="{{route('cart.index')}}"><i class="fa fa-shopping-cart"
+            <a style="color:black" class="site-logo small_screen_icon href=" href="{{route('cart.index')}}"><i class="fa fa-shopping-cart"
                     aria-hidden="true"></i>
                 <sup>{{ Cart::getContent()->count()}}</sup>
             </a>
             &nbsp;
-            <i class="fa fa-search search_icon" aria-hidden="true"></i>
+            <i style="color:black" class="fa fa-search search_icon" aria-hidden="true"></i>
         </div>
 
         <!-- for small screen -->
