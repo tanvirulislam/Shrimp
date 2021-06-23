@@ -1,4 +1,4 @@
-@extends('frontEnd.customer.master.master')
+@extends('frontEnd.master.master')
 @section('title')
 pending order
 @endsection
