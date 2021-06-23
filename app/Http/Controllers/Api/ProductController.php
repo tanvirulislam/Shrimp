@@ -281,7 +281,8 @@ public function pmenu($slug){
 
     public function wishlist_delete(Request $request, $id)
     {
-        $Wishlist = Wishlist::find($id);
+        $Wishlist =Wishlist::where('id', $id);
+        // $wishlist->user_id = $id;
         $Wishlist->product_id = $request->product_id;
         $Wishlist->delete();
 
@@ -289,7 +290,7 @@ public function pmenu($slug){
 
             'message' => 'Successfully deleted',
             
-            ],200);
+        ],200);
         
     }
 
@@ -317,23 +318,23 @@ public function pmenu($slug){
         return response()->json([
             'orders' => $orders,
             ],200);
-        }
+    }
 
-        public function order_history($id){
-            // $order_history = Auth::user()->id;
-      
-            $orders =DB::table('main_orders')
-            ->join('users','main_orders.user_id','=','users.id')
-            ->join('shippings','main_orders.shipping_id','=','shippings.id')
-            ->select('main_orders.*','users.name as Username','shippings.customer_name','shippings.address')
-            ->where('main_orders.status','=',1)
-            ->where('main_orders.user_id','=',$id)
-            ->get();
+    public function order_history($id){
+        // $order_history = Auth::user()->id;
+    
+        $orders =DB::table('main_orders')
+        ->join('users','main_orders.user_id','=','users.id')
+        ->join('shippings','main_orders.shipping_id','=','shippings.id')
+        ->select('main_orders.*','users.name as Username','shippings.customer_name','shippings.address')
+        ->where('main_orders.status','=',1)
+        ->where('main_orders.user_id','=',$id)
+        ->get();
 
-            return response()->json([
-                'orders' => $orders,
-                ],200);
-            }
+        return response()->json([
+            'orders' => $orders,
+            ],200);
+    }
 
 
 }
