@@ -47,7 +47,7 @@
 
     @yield('body')
 
-    <div class="small_screen_footer">
+    <!-- <div class="small_screen_footer">
         <div class="row text-center">
             <div class="col-3">
             <a href="{{route('index')}}"><i class="fa fa-home" aria-hidden="true"></i></a>
@@ -67,7 +67,7 @@
             @endif
             </div>
         </div>
-    </div>
+    </div> -->
     @include('frontEnd.layout.footer')
 
 

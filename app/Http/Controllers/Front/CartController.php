@@ -66,37 +66,6 @@ class CartController extends Controller
 	}
 
 
-	// public function wishlist($id){
-		
-		
-	// 	if(Auth::check() && Auth::user()->role_id == 2){
-	// 		Wishlist::insert([
-	// 			'user_id' => Auth::id(),
-	// 			'product_id' => $id,
-	// 		]);
-	
-	// 		return redirect()->back()->with('success_msg', 'Item added into wishlist');
-	
-	// 	}else{
-	// 		return redirect()->route('customer_dashoard.login')->with('Login error', 'Login first');
-	// 	}
-	
-	// }
-	
-	// public function wishlist_detail(){
-	// 	$logo = Logo_Offer::where('logo_offer', '1')->first();
-    //     $offer = Logo_Offer::where('logo_offer', '0')->first();
-    //     $wishlist = Wishlist::count();
-    //     $nav_category = Category::all();
-	
-	// 	return view('front.wishlist', compact('logo','offer', 'wishlist', 'nav_category'));
-	// }
-
-
-
-
-
-
 
 }
 
