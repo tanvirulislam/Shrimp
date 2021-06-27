@@ -17,6 +17,9 @@ use App\Stock;
 use App\Store;
 use App\Shipping;
 use App\Wishlist;
+use App\Cart;
+use App\Mainorder;
+use App\Order;
 
 use App\Http\Resources\Product\ProductResource;
 use App\Http\Resources\Product\FeatureProductResource;
@@ -235,7 +238,7 @@ public function pmenu($slug){
     }
     
     public function shipping_store(Request $request, $user_id){
-        // $user_id = Auth::user()->id;
+        $user_id = Auth::user()->id;
         $customer = new Shipping();
         $customer->customer_name = $request->customer_name;
         $customer->email = $request->email;
@@ -244,11 +247,51 @@ public function pmenu($slug){
         $customer->message = $request->message;
         $customer->user_id = $user_id;
         $customer->save();
-        return Response()->json([
-            'shipping info' => $customer,
-        ], 200);
 
-    }
+        $shippingId = $customer->id;
+		$userId = $customer->user_id;
+		if(Auth::check() && Auth::user()->role_id == 2){
+
+            $user_id = Auth::id();
+            $cart_product = Cart::where('user_id', $user_id)->get();
+            $total = $cart_product->sum('subtotal');
+
+            
+            $mainOrder = new Mainorder();
+            $mainOrder->user_id = Auth::user()->id;
+            $mainOrder->shipping_id =  $shippingId;
+            $mainOrder->pin ='Fish and Shrimp-'.rand('10000000','99999999');
+            $mainOrder->order_total=$total;
+            $mainOrder->save();
+            
+            //   $orderId=$mainOrder->id;
+            
+            //   $cartCollection = new cart();
+            // 				// dd($cartCollection);
+            //   foreach ($cartCollection as $cartProduct){
+            
+            //    $order= new Order();
+            //    $order->user_id = Auth::id();
+            //    $order->shipping_id =  $shippingId;
+                //    $order->order_id = $orderId;
+            //    $order->product_id = $cartProduct->id;
+            //    $order->product_name = $cartProduct->name;
+            //    $order->product_price = $cartProduct->price;
+            //    $order->product_quantity =$cartProduct->qty;
+            //    $order->order_total = \Cart::get($cartProduct->id)->getPriceSum();
+            
+            //    $order->save();
+
+
+
+            return Response()->json([
+                'shipping info' => $customer,
+            ], 200);
+
+            }
+        }
+
+    
 
     public function wishlist_store(Request $request, $user_id){
         
@@ -317,23 +360,100 @@ public function pmenu($slug){
         return response()->json([
             'orders' => $orders,
             ],200);
+    }
+
+    public function order_history($id){
+        // $order_history = Auth::user()->id;
+    
+        $orders =DB::table('main_orders')
+        ->join('users','main_orders.user_id','=','users.id')
+        ->join('shippings','main_orders.shipping_id','=','shippings.id')
+        ->select('main_orders.*','users.name as Username','shippings.customer_name','shippings.address')
+        ->where('main_orders.status','=',1)
+        ->where('main_orders.user_id','=',$id)
+        ->get();
+
+        return response()->json([
+            'orders' => $orders,
+            ],200);
         }
 
-        public function order_history($id){
-            // $order_history = Auth::user()->id;
-      
-            $orders =DB::table('main_orders')
-            ->join('users','main_orders.user_id','=','users.id')
-            ->join('shippings','main_orders.shipping_id','=','shippings.id')
-            ->select('main_orders.*','users.name as Username','shippings.customer_name','shippings.address')
-            ->where('main_orders.status','=',1)
-            ->where('main_orders.user_id','=',$id)
-            ->get();
+        // custom cart------------
+
+        public function custom_cart_view($user_id){
+            // $cart_product = Cart::where('user_id', $user_id)->get();
+
+            $user_id = Auth::id();
+            $cart_product = Cart::where('user_id', $user_id)->get();
+            $total = $cart_product->sum('subtotal');
+
 
             return response()->json([
-                'orders' => $orders,
-                ],200);
-            }
+                'Cart item' => $cart_product,
+                'total' => $total,
+            ]);
+        }
 
+        public function custome_cart_add(Request $request, $id){
+            $user_id = Auth::id();
+            $check = DB::table('carts')->where('user_id', $user_id)->where('product_id', $id);
+            
+            // if($check){
+            //     return response()->json([
+            //         'cart' => 'Item already in your cart'
+            //     ]);
+            // }else{
+               
+                $cart = new Cart();
+                $cart->product_id = $id;
+                $cart->user_id = $user_id;
+                $cart->image = $request->image;
+                $cart->name = $request->name;
+                $cart->price = $request->price;
+                $cart->qty = $request->qty;
+                $cart->subtotal = $request->qty * $request->price;
+                $cart->save();
+
+                return response()->json([
+                    'Cart' => $cart,
+                ], 200);
+            // }
+        }
+
+        public function custome_cart_update(Request $request, $id){
+            $user_id = Auth::id();
+            $check = DB::table('carts')->where('user_id', $user_id)->where('product_id', $id)->first();
+
+            if ($check){
+                $checkId = $check->id;
+                $cart = array();
+                $cart['qty'] = $request->qty;
+                $cart['subtotal'] = $request->qty * $check->price;
+
+                DB::table('carts')->where('id', $checkId)->update($cart);
+            }
+            
+           return response()->json([
+               'cart' => $cart,
+           ]);
+        }
+
+        public function custome_cart_remove($id){
+            $cart = Cart::find($id);
+            $cart->delete();
+
+            return response()->json([
+                'cart' => 'Cart item deleted'
+            ]);
+        }
+
+        public function custome_cart_clear(){
+            $user_id = Auth::id();
+            DB::table('carts')->where('user_id', $user_id)->delete();
+
+            return response()->json([
+                'cart' => 'Cart flash'
+            ]);
+        }
 
 }
