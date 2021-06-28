@@ -288,8 +288,8 @@ public function pmenu($slug){
                 'shipping info' => $customer,
             ], 200);
 
-            }
         }
+    }
 
     
 

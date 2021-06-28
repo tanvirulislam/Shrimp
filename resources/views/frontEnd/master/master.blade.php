@@ -47,7 +47,27 @@
 
     @yield('body')
 
-
+    <div class="small_screen_footer">
+        <div class="row text-center">
+            <div class="col-3">
+            <a href="{{route('index')}}"><i class="fa fa-home" aria-hidden="true"></i></a>
+            </div>
+            <div class="col-3">
+            <i style="color:white" class="fa fa-search search_icon" aria-hidden="true"></i>
+            </div>
+            <div class="col-3">
+            <a href="{{route('cart.index')}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                <sup style="left: -25px;">{{ Cart::getContent()->count()}}</sup></a>
+            </div>
+            <div class="col-3">
+            @if(Auth::check())
+            <a href="{{route('user_pending_order')}}"><i class="fa fa-user" aria-hidden="true"></i></a>
+            @else
+            <a href="{{route('customer_dashoard_login')}}"><i class="fa fa-user" aria-hidden="true"></i></a>
+            @endif
+            </div>
+        </div>
+    </div>
     @include('frontEnd.layout.footer')
 
 

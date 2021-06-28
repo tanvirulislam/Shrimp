@@ -22,6 +22,7 @@ DESH BANGLA FISH & SHRIMP
                             Cart<b>
                     </h4><br>
                     @else
+                    <br>
                     <h4>No Item(s) In Your Cart</h4><br>
                     <a href="{{ route('index') }}" class="btn btn-info">Continue Shopping</a>
                     @endif
