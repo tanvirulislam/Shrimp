@@ -153,13 +153,24 @@ public function pmenu($slug){
     
 }
 
-   
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request, $id)
     {
         //
     }
 
-   
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function destroy($id)
     {
         //
@@ -175,6 +186,7 @@ public function pmenu($slug){
     }
 
      public function add(Request $request){
+        //  $product_id = $request->id;
        \Cart::add(array(
             'id' => $request->id,
             'name' => $request->name,
@@ -214,22 +226,30 @@ public function pmenu($slug){
         \Cart::clear();
         return redirect()->route('cart1.index')->with('success_msg', 'Car is cleared!');
     }
-
-    public function product_detail($id){
-        
-        $products = DB::table('products')->where('id', $id)->first();
-        $related_fish = Product::all();
-        
-        return response()->json([
     
-            'products' => $products,
-            'related_fish' => $related_fish,
+       public function product_detail($id){
+        
+        // $slug = substr($product_slug,3);
+        
+        //dd($slug);
+        
+           
+            $products = DB::table('products')->where('id', $id)->first();
+            $related_fish = Product::all();
             
-            ],200);
-    
+            return response()->json([
+          
+                'products' => $products,
+                'related_fish' => $related_fish,
+               
+                
+                ],200);
+        
     }
-
-    public function shipping_show($id){
+    
+    
+    
+        public function shipping_show($id){
 
         $products = DB::table('shippings')->where('user_id', $id)->get();
         return Response()->json([
@@ -238,7 +258,7 @@ public function pmenu($slug){
     }
     
     public function shipping_store(Request $request, $user_id){
-        $user_id = Auth::user()->id;
+        $user_id = $request->user_id;
         $customer = new Shipping();
         $customer->customer_name = $request->customer_name;
         $customer->email = $request->email;
@@ -250,19 +270,21 @@ public function pmenu($slug){
 
         $shippingId = $customer->id;
 		$userId = $customer->user_id;
-		if(Auth::check() && Auth::user()->role_id == 2){
+		// if(Auth::check() && Auth::user()->role_id == 2){
 
-            $user_id = Auth::id();
+        //     $user_id = $request->user_id;
             $cart_product = Cart::where('user_id', $user_id)->get();
             $total = $cart_product->sum('subtotal');
 
             
             $mainOrder = new Mainorder();
-            $mainOrder->user_id = Auth::user()->id;
+            $mainOrder->user_id = $userId;
             $mainOrder->shipping_id =  $shippingId;
             $mainOrder->pin ='Fish and Shrimp-'.rand('10000000','99999999');
             $mainOrder->order_total=$total;
             $mainOrder->save();
+
+            $cart_item_delete = DB::table('carts')->where('user_id', $user_id)->delete();
             
             //   $orderId=$mainOrder->id;
             
@@ -288,26 +310,26 @@ public function pmenu($slug){
                 'shipping info' => $customer,
             ], 200);
 
-        }
+        // }
     }
-
-    
 
     public function wishlist_store(Request $request, $user_id){
         
+        // $user_id = Auth::user()->id;
         $wishlist = new Wishlist();
         $wishlist->user_id = $user_id;
         $wishlist->product_id = $request->product_id;
         $wishlist->save();
 
         return Response()->json([
-            'shipping' => $wishlist,
+            'wishlist' => $wishlist,
         ], 200);
 
     }
 
     public function wishlist_detail($user_id){
 
+        // $user_id = Auth::user()->id;
         $all_wishlist = DB::table('wishlists')
         ->join('products','products.product_slug','=','wishlists.product_id')
         ->select('products.*','wishlists.product_id')
@@ -322,20 +344,6 @@ public function pmenu($slug){
             ],200);
     }
 
-    public function wishlist_delete(Request $request, $id)
-    {
-        $Wishlist = Wishlist::find($id);
-        $Wishlist->product_id = $request->product_id;
-        $Wishlist->delete();
-
-        return response()->json([
-
-            'message' => 'Successfully deleted',
-            
-            ],200);
-        
-    }
-
     public function user_detail($id){
         
         $user_id = DB::table('users')->where('id', $id)->get();
@@ -345,8 +353,8 @@ public function pmenu($slug){
             ],200);
 
     }
-
-    public function user_pending_order($id){
+    
+     public function user_pending_order($id){
 
         // $order_history = DB::table('orders')->where('user_id', $id)->get();
         $orders =DB::table('main_orders')
@@ -360,37 +368,35 @@ public function pmenu($slug){
         return response()->json([
             'orders' => $orders,
             ],200);
-    }
-
-    public function order_history($id){
-        // $order_history = Auth::user()->id;
-    
-        $orders =DB::table('main_orders')
-        ->join('users','main_orders.user_id','=','users.id')
-        ->join('shippings','main_orders.shipping_id','=','shippings.id')
-        ->select('main_orders.*','users.name as Username','shippings.customer_name','shippings.address')
-        ->where('main_orders.status','=',1)
-        ->where('main_orders.user_id','=',$id)
-        ->get();
-
-        return response()->json([
-            'orders' => $orders,
-            ],200);
         }
+        
+        public function order_history($id){
+            // $order_history = Auth::user()->id;
+      
+            $orders =DB::table('main_orders')
+            ->join('users','main_orders.user_id','=','users.id')
+            ->join('shippings','main_orders.shipping_id','=','shippings.id')
+            ->select('main_orders.*','users.name as Username','shippings.customer_name','shippings.address')
+            ->where('main_orders.status','=',1)
+            ->where('main_orders.user_id','=',$id)
+            ->get();
 
-        // custom cart------------
-
+            return response()->json([
+                'orders' => $orders,
+                ],200);
+        }
+        
+        
+        
         public function custom_cart_view($user_id){
-            // $cart_product = Cart::where('user_id', $user_id)->get();
-
-            $user_id = Auth::id();
+            // $user_id = Auth::id();
             $cart_product = Cart::where('user_id', $user_id)->get();
-            $total = $cart_product->sum('subtotal');
 
+            $total = $cart_product->sum('subtotal');
 
             return response()->json([
                 'Cart item' => $cart_product,
-                'total' => $total,
+                'Total' => $total,
             ]);
         }
 
@@ -406,7 +412,7 @@ public function pmenu($slug){
                
                 $cart = new Cart();
                 $cart->product_id = $id;
-                $cart->user_id = $user_id;
+                $cart->user_id = $request->user_id;
                 $cart->image = $request->image;
                 $cart->name = $request->name;
                 $cart->price = $request->price;
@@ -421,21 +427,24 @@ public function pmenu($slug){
         }
 
         public function custome_cart_update(Request $request, $id){
-            $user_id = Auth::id();
+           $user_id = $request->user_id;
             $check = DB::table('carts')->where('user_id', $user_id)->where('product_id', $id)->first();
 
             if ($check){
                 $checkId = $check->id;
                 $cart = array();
+                 $cart['user_id'] = $request->user_id;
                 $cart['qty'] = $request->qty;
                 $cart['subtotal'] = $request->qty * $check->price;
 
                 DB::table('carts')->where('id', $checkId)->update($cart);
-            }
+               
             
-           return response()->json([
-               'cart' => $cart,
-           ]);
+    
+                return response()->json([
+                    'cart' => 'updated',
+                ]);
+            }
         }
 
         public function custome_cart_remove($id){
@@ -448,12 +457,12 @@ public function pmenu($slug){
         }
 
         public function custome_cart_clear(){
-            $user_id = Auth::id();
-            DB::table('carts')->where('user_id', $user_id)->delete();
+           DB::table('carts')->delete();
 
             return response()->json([
                 'cart' => 'Cart flash'
             ]);
         }
+
 
 }
