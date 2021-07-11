@@ -9,6 +9,7 @@ use App\Product;
 use App\Banner;
 use App\Category;
 use App\Wishlist;
+use App\User;
 use Session;
 use DB;
 use Illuminate\Support\Facades\Auth;
@@ -52,12 +53,15 @@ class FrontController extends Controller
         $category_fish_second = Category:: latest()->skip(1)->take(2)->get();
 		$wishlist = Wishlist::count();
 
+        $id = Auth::user()->id;
+        $currentuser = User::find($id);
+
 
         return view('frontEnd.index', compact('logo', 'banner', 'bannersecond', 'feature_item',
          'category_fish', 'cat_wise_product', 'category_fish_second', 'offer', 'wishlist', 'category_fish_desi',
         'category_desi_fish', 'category_fish_desi_skip', 'category_sea_fish', 'category_fish_desi_skip2',
         'tab_product_fish3', 'category_fish_desi_skip3', 'tab_product_fish4', 'category_fish_desi_skip4',
-        'tab_product_fish5', 'nav_category'));
+        'tab_product_fish5', 'nav_category', 'currentuser'));
 
     }
 
@@ -199,4 +203,98 @@ class FrontController extends Controller
     
     
 
+// load more----------
+    function load_more(){
+        
+        return view('frontEnd.index');
+        }
+
+    function load_data(Request $request)
+    {
+     if($request->ajax())
+     {
+      if($request->id > 0)
+      {
+       $data = DB::table('products')
+          ->where('id', '<', $request->id)
+          ->orderBy('id', 'DESC')
+          ->limit(8)
+          ->get();
+      }
+      else
+      {
+       $data = DB::table('products')
+          ->orderBy('id', 'DESC')
+          ->limit(8)
+          ->get();
+      }
+      $output = '';
+      $last_id = '';
+      
+      if(!$data->isEmpty())
+      {
+       foreach($data as $item)
+       {
+           $img_url = 'http://localhost/Shrimp/'.$item->image;
+
+        $output .= '
+        <div class="col-lg-3 col-sm-6">
+                <div class="product-item">
+                    <div class="pi-pic">
+                    
+                        <img src="'.$img_url.'" alt="">
+                        <div class="pi-links">
+                           
+
+                                <button type="submit" class="add-card"><i class="fa fa-shopping-cart"></i>
+                                <span >ADD TO CART</span></button>
+                                <a href="" class="wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                           
+
+                        </div>
+                    </div>
+                    <div class="pi-text">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <h6>'.$item->name.' </h6>
+
+                            </div>
+                            <div class="col-md-7">
+                                <span>'.$item->sell_price.' TK</span> &nbsp;
+                                <span style="float: right">'.$item->weight.' KG</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+          
+        ';
+        $last_id = $item->id;
+       }
+       $output .= '
+       <div class="row">
+        <div class="col-md-5"></div>
+        <div class="col-md-2">
+            <div id="load_more">
+                <button style="width: max-content;" type="button" name="load_more_button" class="btn btn-success form-control" data-id="'.$last_id.'" id="load_more_button">Load More</button>
+            </div>
+        </div>
+        <div class="col-md-5"></div>
+       </div>
+       
+       ';
+      }
+      else
+      {
+       $output .= '
+        <div id="load_more">
+            <button type="button" name="load_more_button" class="btn btn-info form-control">No More Data Found</button>
+        </div>
+       ';
+      }
+      echo $output;
+     }
+    }
 }

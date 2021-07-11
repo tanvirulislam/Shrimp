@@ -272,11 +272,10 @@ public function pmenu($slug){
 		$userId = $customer->user_id;
 		// if(Auth::check() && Auth::user()->role_id == 2){
 
-        //     $user_id = $request->user_id;
+        //   $user_id = $request->user_id;
             $cart_product = Cart::where('user_id', $user_id)->get();
             $total = $cart_product->sum('subtotal');
 
-            
             $mainOrder = new Mainorder();
             $mainOrder->user_id = $userId;
             $mainOrder->shipping_id =  $shippingId;
@@ -284,26 +283,30 @@ public function pmenu($slug){
             $mainOrder->order_total=$total;
             $mainOrder->save();
 
-            $cart_item_delete = DB::table('carts')->where('user_id', $user_id)->delete();
             
-            //   $orderId=$mainOrder->id;
-            
-            //   $cartCollection = new cart();
-            // 				// dd($cartCollection);
-            //   foreach ($cartCollection as $cartProduct){
-            
-            //    $order= new Order();
-            //    $order->user_id = Auth::id();
-            //    $order->shipping_id =  $shippingId;
-                //    $order->order_id = $orderId;
-            //    $order->product_id = $cartProduct->id;
-            //    $order->product_name = $cartProduct->name;
-            //    $order->product_price = $cartProduct->price;
-            //    $order->product_quantity =$cartProduct->qty;
-            //    $order->order_total = \Cart::get($cartProduct->id)->getPriceSum();
-            
-            //    $order->save();
+              $orderId=$mainOrder->id;
+              foreach ($cart_product as $cartProduct){
+		   
+                $order= new Order();
+                $order->user_id = $userId;
+                $order->shipping_id =  $shippingId;
+                $order->product_id = $cartProduct->id;
+                $order->order_id = $orderId;
+                $order->product_name = $cartProduct->name;
+                $order->product_price = $cartProduct->price;
+                $order->product_quantity =$cartProduct->qty;
+                $order->order_total = $cartProduct->qty * $cartProduct->price;
+                
+                $order->save();
+                
+                
+              }
 
+
+            
+             
+
+            $cart_item_delete = DB::table('carts')->where('user_id', $user_id)->delete();
 
 
             return Response()->json([
@@ -385,6 +388,25 @@ public function pmenu($slug){
                 'orders' => $orders,
                 ],200);
         }
+
+        public function order_detail($id){
+            // $order_history = Auth::user()->id;
+      
+              $order_info = DB::table('main_orders')
+                          ->join('users','main_orders.user_id','=','users.id')
+                          ->join('shippings','main_orders.shipping_id','=','shippings.id')
+                          ->select('main_orders.*','users.name as Username','users.phone as Userphone','shippings.customer_name','shippings.address','shippings.email','shippings.phone_num','shippings.message')
+                          ->where('main_orders.user_id','=',$id)
+                          ->first();
+        // $order_details = DB::table('orders')->where('user_id', $id)->get();
+
+                 $order = Order::where('order_id','=',$id)->get();
+                
+                 return response()->json([
+                    'order_info' => $order_info,
+                    'order' => $order,
+                    ],200);
+        }
         
         
         
@@ -418,6 +440,7 @@ public function pmenu($slug){
                 $cart->price = $request->price;
                 $cart->qty = $request->qty;
                 $cart->subtotal = $request->qty * $request->price;
+                
                 $cart->save();
 
                 return response()->json([

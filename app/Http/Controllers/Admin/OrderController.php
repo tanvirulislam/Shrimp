@@ -151,11 +151,11 @@ class OrderController extends Controller
                     ->select('main_orders.*','users.name as Username','users.phone as Userphone','shippings.customer_name','shippings.address','shippings.email','shippings.phone_num','shippings.message')
                     ->where('main_orders.user_id','=',$order_history)
                     ->first();
-           $details = Order::where('order_id','=',$id)->get();
-           $logo = Logo_Offer::where('logo_offer', '1')->first();
-           $offer = Logo_Offer::where('logo_offer', '0')->first();
-       $wishlist = Wishlist::count();
-    $nav_category = Category::all();
+      $details = Order::where('order_id','=',$id)->get();
+      $logo = Logo_Offer::where('logo_offer', '1')->first();
+      $offer = Logo_Offer::where('logo_offer', '0')->first();
+      $wishlist = Wishlist::count();
+      $nav_category = Category::all();
 
         return view('admin.order.user_order_detail',['order'=>$order,'details'=>$details, 'offer'=>$offer,
          'logo'=>$logo, 'wishlist'=>$wishlist,'nav_category'=>$nav_category]);

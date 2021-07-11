@@ -95,7 +95,7 @@
                 
                 </li>
                 <li><a href="#contact">Contact</a> </li>
-                <li><a href="#">Blog</a></li>
+                <li><a href="#">{{$currentuser->name}}</a></li>
             </ul>
         </div>
     </nav>

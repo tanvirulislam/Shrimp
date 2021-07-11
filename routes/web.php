@@ -49,6 +49,11 @@ Route::get('/clear', function() {
     Route::get('/shipping_info', 'Front\ShippingController@shipping')->name('shipping_info');
     Route::post('/shippinginfo_store', 'Front\ShippingController@shipping_store')->name('shippinginfo_store');
 
+    // load more
+    
+    Route::get('/loadmore', 'Front\FrontController@index');
+    Route::post('/loadmore/load_data', 'Front\FrontController@load_data')->name('loadmore.load_data');
+
 
 
     // backend

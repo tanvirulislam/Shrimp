@@ -43,8 +43,8 @@ class CategoryController extends Controller{
         $filename=time().'.'.$extension;
         $file->move('public/upload/',$filename);
         $category->image ='public/upload/'. $filename;
-    }
-// dd($category);
+        }
+
         $category->save();
         Toastr::success('Successully Add 🙂' ,'Success');
         return redirect()->back()->with('message','Registered succesfully');

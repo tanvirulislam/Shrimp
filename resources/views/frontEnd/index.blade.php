@@ -141,8 +141,18 @@ DESH BANGLA FISH & SHRIMP
             <li><a href="{{route('cat_wise_all_product', $item->slug)}}">{{$item->name}}</a></li>
             @endforeach
         </ul>
-        <div class="row">
-            @foreach ($feature_item->shuffle()->take(8) as $item)
+
+        <div class="panel-body">
+        {{ csrf_field() }}
+            <div class="row">
+               
+                    <div id="post_data"></div>
+                
+            </div>
+        </div>
+
+        <!-- <div class="row">
+            @foreach ($feature_item as $item)
             <div class="col-lg-3 col-sm-6">
                 <div class="product-item">
                     <div class="pi-pic">
@@ -181,10 +191,12 @@ DESH BANGLA FISH & SHRIMP
                 </div>
             </div>
             @endforeach
-        </div>
-        <div class="text-center">
+        </div> -->
+
+        <!-- <div class="text-center">
             <a href="{{route('all_products')}}" class="site-btn sb-line sb-dark">LOAD MORE</a>
-        </div>
+        </div> -->
+
     </div>
 </section>
 <!-- Product filter section end -->
@@ -192,7 +204,7 @@ DESH BANGLA FISH & SHRIMP
 
 <!-- Banner section -->
 <section class="banner-section">
-    <div class="container">
+    <div class="container-fluid">
         <div class="banner set-bg" data-setbg="{{asset('/')}}{{$offer->image}}">
             <div class="tag-new">15% OFF</div>
             <span style="color:white">Stock Available</span>

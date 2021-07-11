@@ -34,6 +34,10 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> -->
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" /> -->
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
  
 </head>
 
@@ -47,7 +51,7 @@
 
     @yield('body')
 
-    <div class="small_screen_footer">
+    <!-- <div class="small_screen_footer">
         <div class="row text-center">
             <div class="col-3">
             <a href="{{route('index')}}"><i class="fa fa-home" aria-hidden="true"></i></a>
@@ -67,7 +71,7 @@
             @endif
             </div>
         </div>
-    </div>
+    </div> -->
     @include('frontEnd.layout.footer')
 
 
@@ -101,5 +105,35 @@
         });
     });
     </script>
+
+<script>
+    $(document).ready(function(){
+    
+        var _token = $('input[name="_token"]').val();
+
+        load_data('', _token);
+
+        function load_data(id="", _token)
+        {
+            $.ajax({
+                url:"{{ route('loadmore.load_data') }}",
+                method:"POST",
+                data:{id:id, _token:_token},
+                success:function(data)
+                {
+                    $('#load_more_button').remove();
+                    $('#post_data').append(data);
+                }
+            })
+        }
+
+        $(document).on('click', '#load_more_button', function(){
+            var id = $(this).data('id');
+            $('#load_more_button').html('<b>Loading...</b>');
+            load_data(id, _token);
+        });
+
+    });
+</script>
     
 </body>

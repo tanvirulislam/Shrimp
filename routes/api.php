@@ -50,6 +50,7 @@ Route::get('/user/{id}','Api\ProductController@user_detail');
 
 Route::get('/pending-order/{id}','Api\ProductController@user_pending_order');
 Route::get('/order-history/{id}','Api\ProductController@order_history');
+Route::get('/order-detail/{id}','Api\ProductController@order_detail');
 
 // custome cart-------------
 Route::get('/cart/{id}', 'Api\ProductController@custom_cart_view');
