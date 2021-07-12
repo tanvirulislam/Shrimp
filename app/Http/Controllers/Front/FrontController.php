@@ -51,6 +51,7 @@ class FrontController extends Controller
         
         $cat_wise_product = DB::table('products')->latest()->limit(7)->get();
         $category_fish_second = Category:: latest()->skip(1)->take(2)->get();
+        
 		$wishlist = Wishlist::count();
 
         $id = Auth::user()->id;
@@ -131,12 +132,22 @@ class FrontController extends Controller
 
     public function wishlist($id){
 		if(Auth::check() ){
-			Wishlist::insert([
-				'user_id' =>Auth::id(),
-				'product_id' => $id,
-			]);
-	
-			return redirect()->route('index')->with('success_msg', 'Item added into wishlist');
+
+            $user_id = Auth::id();
+            $check = DB::table('wishlists')->where('user_id', $user_id)->where('product_id', $id)->first();
+            if($check){
+                Toastr::info('Item already Added 🙂' ,'Info');
+                return redirect()->route('index');
+            }
+            else{
+                Wishlist::insert([
+                    'user_id' =>Auth::id(),
+                    'product_id' => $id,
+                ]);
+        
+                return redirect()->route('index')->with('success_msg', 'Item added into wishlist');
+            }
+			
 	
 		}elseif( Session::get('customerId')){
             Wishlist::insert([

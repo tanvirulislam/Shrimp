@@ -4,9 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});
 
 
 
@@ -50,7 +50,11 @@ Route::get('/user/{id}','Api\ProductController@user_detail');
 
 Route::get('/pending-order/{id}','Api\ProductController@user_pending_order');
 Route::get('/order-history/{id}','Api\ProductController@order_history');
+<<<<<<< HEAD
 Route::get('/order-detail/{id}','Api\ProductController@order_detail');
+=======
+
+>>>>>>> 3e9c31b0b0dd839ccf98b63a8e5d1275ea7d9d06
 
 // custome cart-------------
 Route::get('/cart/{id}', 'Api\ProductController@custom_cart_view');
@@ -59,7 +63,10 @@ Route::post('cart/update/{id}', 'Api\ProductController@custome_cart_update');
 Route::post('/cart/remove/{id}', 'Api\ProductController@custome_cart_remove');
 Route::post('/cart/clear', 'Api\ProductController@custome_cart_clear');
  
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3e9c31b0b0dd839ccf98b63a8e5d1275ea7d9d06
 
 
 

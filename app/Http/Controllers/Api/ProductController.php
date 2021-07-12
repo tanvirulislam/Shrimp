@@ -18,8 +18,11 @@ use App\Store;
 use App\Shipping;
 use App\Wishlist;
 use App\Cart;
+<<<<<<< HEAD
 use App\Mainorder;
 use App\Order;
+=======
+>>>>>>> 3e9c31b0b0dd839ccf98b63a8e5d1275ea7d9d06
 
 use App\Http\Resources\Product\ProductResource;
 use App\Http\Resources\Product\FeatureProductResource;
@@ -486,6 +489,90 @@ public function pmenu($slug){
                 'cart' => 'Cart flash'
             ]);
         }
+
+
+    // custome cart
+    public function custom_cart_view($user_id){
+        // $user_id = Auth::id();
+        $cart_product = Cart::where('user_id', $user_id)->get();
+
+        return response()->json([
+            'Cart item' => $cart_product,
+        ]);
+    }
+
+    public function custome_cart_add(Request $request, $id){
+        $user_id = Auth::id();
+        $check = DB::table('carts')->where('user_id', $user_id)->where('product_id', $id);
+        
+        // if($check){
+        //     return response()->json([
+        //         'cart' => 'Item already in your cart'
+        //     ]);
+        // }else{
+           
+            $cart = new Cart();
+            $cart->product_id = $id;
+            $cart->user_id = $request->user_id;
+            $cart->image = $request->image;
+            $cart->name = $request->name;
+            $cart->price = $request->price;
+            $cart->qty = $request->qty;
+            $cart->subtotal = $request->qty * $request->price;
+            $cart->save();
+
+            return response()->json([
+                'Cart' => $cart,
+            ], 200);
+        // }
+    }
+
+    public function custome_cart_update(Request $request, $id){
+        $user_id = $request->user_id;
+        $check = DB::table('carts')->where('user_id', $user_id)->where('product_id', $id)->first();
+
+        if ($check){
+            $checkId = $check->id;
+            $cart = array();
+            $cart['user_id'] = $request->user_id;
+            $cart['qty'] = $request->qty;
+            $cart['subtotal'] = $request->qty * $check->price;
+
+            DB::table('carts')->where('id', $checkId)->update($cart);
+            }
+        
+
+       return response()->json([
+           'cart' => $cart,
+       ]);
+    }
+
+    public function custome_cart_remove(Request $request, $id){
+        // $user_id = $request->user_id;
+        // $cart = Cart::find($id);
+        // $cart->product_id = $id;
+        // $cart->delete();
+
+        $cart = array();
+        $cart['product_id'] = $id;
+        $cart['user_id'] = $request->user_id;
+
+        DB::table('carts')->where('id', $id)->delete($cart);
+
+        return response()->json([
+            'cart' => 'Cart item deleted'
+        ]);
+    }
+
+    public function custome_cart_clear(){
+        $user_id = Auth::id();
+        DB::table('carts')->where('user_id', $user_id)->delete();
+
+        return response()->json([
+            'cart' => 'Cart flash'
+        ]);
+    }
+
 
 
 }
